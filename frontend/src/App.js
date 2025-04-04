@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';  
 import './css/Body.css'
-import './css/Footer.css'
 import './css/Form.css'
 import './css/Header.css'
 import './css/Mian.css'
@@ -38,7 +37,7 @@ import ScrollToTopButton from './components/ScrollButton';
         };
 
         try {
-          const response = await axios.post('http://localhost:5000/send-email', data);
+          const response = await axios.post('https://gtxcompany-com.onrender.com', data);
           setStatus(response.data.message);
         } catch (error) {
           setStatus('Error sending email');

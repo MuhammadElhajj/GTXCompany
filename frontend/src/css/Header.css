@@ -41,3 +41,14 @@
     
   
   }
+@media screen and (min-width : 0px) and (max-width : 400px) { 
+
+    .Header__List__Link a {
+       
+        font-size: 14px;
+       
+        margin-left: 20px;
+    }
+    
+  
+  }

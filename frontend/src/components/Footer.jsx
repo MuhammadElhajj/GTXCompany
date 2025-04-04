@@ -1,4 +1,5 @@
-import FooterLogo from '../assets/img/GT11 (1).png'
+import FooterLogo from '../assets/img/GT11 (1).png';
+import '../css/Footer.css';
 
 function Footer () {
     return (
