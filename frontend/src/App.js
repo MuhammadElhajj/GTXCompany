@@ -132,7 +132,7 @@ function App() {
 
         try {  
             // const response = await axios.post('http://localhost:5000/send-email', data);  
-            const response = await axios.post('https://gtxcompanybackend.onrender.com', data);  
+            const response = await axios.post('https://gtxcompanybackend.onrender.com/api/send-email', data);  
             setStatus(response.data.message);  
         } catch (error) {  
             setStatus('Error sending email : ' + error.message);  
