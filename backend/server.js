@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 
 dotenv.config(); // لتحميل المتغيرات البيئية  
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));  
+// app.use(express.static(path.join(__dirname, '../frontend/build')));  
 
 const app = express();  
 const port = process.env.PORT || 5000;  
