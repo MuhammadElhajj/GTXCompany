@@ -30,6 +30,33 @@ color: #ff9800;
   font-size: 18px;
 
 }
+.layout .FaAngleDoubleDown {
+color: black;
+  font-size: 18px;
+  margin-left: 5px;
+  animation: move 2s infinite;  
+}
+
+.FaAngleDoubleUp {
+  animation: move 2s infinite;  
+}
+@keyframes move {  
+  0% {  
+      transform: translateY(0); /* Starting position */  
+  }  
+  25% {  
+      transform: translateY(5px); /* Move down */  
+  }  
+  50% {  
+      transform: translateY(0); /* Back to original position */  
+  }  
+  75% {  
+      transform: translateY(-5px); /* Move up */  
+  }  
+  100% {  
+      transform: translateY(0); /* Back to original position */  
+  }  
+}  
 
 /* .logotext {
     padding-left: 20px;
@@ -62,3 +89,14 @@ color: #ff9800;
       }
  
   } */
+
+  @media screen and (min-width : 0px) and (max-width : 400px) {
+
+    .layout__h1 {
+      font-size: 30px;
+  }
+  .layout__h1 span {
+    font-size: 80px;
+  }
+    
+  }

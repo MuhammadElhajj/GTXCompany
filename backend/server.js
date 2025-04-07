@@ -1,55 +1,54 @@
-    // استيراد الحزم
-    const express = require('express');
-    const nodemailer = require('nodemailer');
-    const cors = require('cors');
-    const dotenv = require('dotenv');
+const express = require('express');  
+const nodemailer = require('nodemailer');  
+const cors = require('cors');  
+const dotenv = require('dotenv');  
 
-    dotenv.config();  // لتحميل المتغيرات البيئية
+dotenv.config(); // لتحميل المتغيرات البيئية  
 
-    const app = express();
-//  const port = process.env.PORT || 5000;
- const port = process.env.PORT ;
+app.use(express.static(path.join(__dirname, '../frontend/build')));  
 
-    app.use(cors());
-    app.use(express.json());
+const app = express();  
+const port = process.env.PORT || 5000;  
 
-    // إعداد النقل عبر البريد الإلكتروني باستخدام nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,  // بريدك الإلكتروني
-        pass: process.env.EMAIL_PASS   // كلمة المرور
-      }
-    });
+app.use(cors());  
+app.use(express.json());  
 
-    // إعداد نقطة النهاية لإرسال الرسائل
-    app.post('/send-email', async (req, res) => {
-      const { subject, message, recipients, senderName, senderEmail, replyToName, replyToEmail } = req.body;
+// إعداد النقل عبر البريد الإلكتروني باستخدام nodemailer  
+const transporter = nodemailer.createTransport({  
+    service: 'gmail',  
+    auth: {  
+        user: process.env.EMAIL_USER,  
+        pass: process.env.EMAIL_PASS,  
+    },  
+});  
 
-      const mailOptions = {
-        from: senderEmail,
-        to: recipients.join(','),  // قائمة المستلمين
-        subject: subject,
-        text:  "SENDER_EMAIL : " + senderEmail +  "\nSENDER_NAME : " + senderName +  "\nREPLY_TO_EMAIL : " +  replyToEmail  +  "\nREPLY_TO_Name : " + replyToName  + "\nMESSAGE : " + message ,
-        
-      };
+// إعداد نقطة النهاية لإرسال الرسائل  
+app.post('/send-email', async (req, res) => {  
+    const { subject, message, recipients, senderName, senderEmail, replyToName, replyToEmail } = req.body;  
 
-      try {
-        // إرسال البريد الإلكتروني
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Email sent successfully!' });
-        console.log("Hello")
-        
-      } catch (error) {
-        res.status(500).json({ message: 'Error sending email', error: error.message });
-        console.log("hi")
-        
-      }
-    });
+    // التحقق من صحة بيانات الإدخال  
+    if (!subject || !message || !recipients || !Array.isArray(recipients) || recipients.length === 0) {  
+        return res.status(400).json({ message: 'Please provide subject, message, and at least one recipient.' });  
+    }  
 
-    // بدء الخادم
-    
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-    
+    const mailOptions = {  
+        from: senderEmail,  
+        to: recipients.join(','), // قائمة المستلمين  
+        subject: subject,  
+        text: `SENDER_EMAIL: ${senderEmail}\nSENDER_NAME: ${senderName}\nREPLY_TO_EMAIL: ${replyToEmail}\nREPLY_TO_NAME: ${replyToName}\nMESSAGE: ${message}`,  
+    };  
+
+    try {  
+        // إرسال البريد الإلكتروني  
+        await transporter.sendMail(mailOptions);  
+        res.status(200).json({ message: 'Email sent successfully!' });  
+    } catch (error) {  
+        console.error("Error sending email:", error); // طباعة الخطأ في الخادم  
+        res.status(500).json({ message: 'Error sending email', error: error.message });  
+    }  
+});  
+
+// بدء الخادم  
+app.listen(port, () => {  
+    console.log(`Server running on port ${port}`);  
+});  

@@ -33,7 +33,7 @@ const ScrollToTopButton = () => {
     <div>
       {isVisible && (
         <button onClick={scrollToTop} style={styles.button}>
-         <FaAngleDoubleUp/>
+         <FaAngleDoubleUp className="FaAngleDoubleUp"/>
         </button>
       )}
     </div>
@@ -53,7 +53,7 @@ const styles = {
         cursor: 'pointer',  
         width: '30px',  
         height: '30px',  
-        color: '#fff',  
+        color: '#000',  
         fontSize: '18px',  
         lineHeight: '35px',  
     },  

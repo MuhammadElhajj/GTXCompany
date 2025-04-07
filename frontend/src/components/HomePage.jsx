@@ -1,4 +1,5 @@
-import Video from '../assets/videos/Home.mp4'
+import Video from '../assets/videos/Home.mp4';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 
 function HomePage () {
     return (
@@ -6,7 +7,7 @@ function HomePage () {
         <div class="layout">
             <h1 class="layout__h1"><span>GT</span> Company</h1>
             <p class="layout__p">The Best Place To Work</p>
-            <button className='Send__Information__Button'>Send Messages</button>
+            <button className='Send__Information__Button'>Send Messages <FaAngleDoubleDown className='FaAngleDoubleDown'/></button>
         </div>
         <video autoPlay loop muted id="myVideo">  
                 <source src={Video} type="video/mp4" />  

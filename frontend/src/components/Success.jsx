@@ -1,14 +1,11 @@
-function SuccessMessage({SetStatus , Status}) {
+function SuccessMessage({SetStatus , Status, successButton}) {
 
 
-  function successButton () {
-    window.location.reload();
-    SetStatus(!Status)
-  }
   return (
-    <div class="Success__Message">
+    // <div class="Success__Message">
+    <div class={Status == "Email sent successfully!" ? "Success__Message" : "Failed__Message" }>
       <h2>Success</h2>
-      <p>Message has been sent</p>
+      <p>{Status}</p>
       <button onClick={successButton}>Ok</button>
     </div>
   );

@@ -1,72 +1,171 @@
-import React, { useState, useEffect } from 'react';  
-import './css/Body.css'
-import './css/Form.css'
-import './css/Header.css'
-import './css/Mian.css'
-import './css/style.css'
-import './App.css';
-import HomePage from './components/HomePage';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import SuccessMessage from './components/Success';
-import FailedMessage from './components/Failed';
-import axios from 'axios';
-import ScrollToTopButton from './components/ScrollButton';
+// import React, { useState, useEffect } from 'react';  
+// import './css/Body.css'
+// import './css/Form.css'
+// import './css/Header.css'
+// import './css/Mian.css'
+// import './css/style.css'
+// import './App.css';
+// import HomePage from './components/HomePage';
+// import Footer from './components/Footer';
+// import Header from './components/Header';
+// import SuccessMessage from './components/Success';
+// import FailedMessage from './components/Failed';
+// import axios from 'axios';
+// import ScrollToTopButton from './components/ScrollButton';
 
 
 
-    function App() {
-      const [senderName, setSenderName] = useState('');
-      const [senderEmail, setSenderEmail] = useState('');
-      const [subject, setSubject] = useState('');
-      const [message, setMessage] = useState('');
-      const [recipients, setRecipients] = useState('');
-      const [replyToName, setReplyToName] = useState('');
-      const [replyToEmail, setReplyToEmail] = useState('');
- const [status, setStatus] = useState('');
+//     function App() {
+//       const [senderName, setSenderName] = useState('');
+//       const [senderEmail, setSenderEmail] = useState('');
+//       const [subject, setSubject] = useState('');
+//       const [message, setMessage] = useState('');
+//       const [recipients, setRecipients] = useState('');
+//       const [replyToName, setReplyToName] = useState('');
+//       const [replyToEmail, setReplyToEmail] = useState('');
+//  const [status, setStatus] = useState('');
+//  const [isPending, setIsPending] = useState(false);  
 
-      const handleSubmit = async (e) => {
-        e.preventDefault();const data = {
-          subject,
-          message,
-          recipients: recipients.split(','), // تحويل إلى مصفوفة
-          senderName,
-          senderEmail,
-          replyToName,
-          replyToEmail
-        };
+//       const handleSubmit = async (e) => {
+//         e.preventDefault();const data = {
+//           subject,
+//           message,
+//           recipients: recipients.split(','), // تحويل إلى مصفوفة
+//           senderName,
+//           senderEmail,
+//           replyToName,
+//           replyToEmail
+//         };
 
-        try {
-          const response = await axios.post('https://gtxcompany-com.onrender.com', data);
-          setStatus(response.data.message);
-        } catch (error) {
-          setStatus('Error sending email');
-        }
-      };
-
-
-      function successButton () {
-        setStatus(!status)
-      }
-
-      // ! Scroll 
+//         try {
+//           // const response = await axios.post('https://gtxcompany-com.onrender.com', data);
+//           const response = await axios.post('http://localhost:5000/send-email', data);  
+//           setStatus(response.data.message);
+//           setIsPending(false);
+//         } catch (error) {
+//           setStatus('Error sending email' + error.message);
+//           // setStatus('Error sending email');
+//         }
+//       };
 
 
+//       function successButton () {
+//         setStatus(!status)
+//       }
 
-  const scrollToTop = () => {  
-      window.scrollTo({  
-          top: 0,  
-          behavior: 'smooth'  
-      });  
-  };  
+//       // ! Scroll 
 
 
-// });
-      // ! Scroll 
+
+//   const scrollToTop = () => {  
+//       window.scrollTo({  
+//           top: 0,  
+//           behavior: 'smooth'  
+//       });  
+//   };  
+
+
+// // });
+//       // ! Scroll 
+
+      
+//   function successButton () {
+//     // window.location.reload();
+//     setStatus(!status)
+//     setSenderName("")
+//     setSenderEmail("")
+//     setSubject("")
+//     setMessage("")
+//     setRecipients("")
+//     setReplyToName("")
+//     setReplyToEmail("")
+  
+//   }
+
+
+
+//     const handleSendMessage = async () => {  
+//         setIsPending(true); // Set pending state to true  
+    
+
+//  }
+
+import React, { useState } from 'react';  
+import './css/Body.css';  
+import './css/Form.css';  
+import './css/Header.css';  
+import './css/Mian.css';  
+import './css/style.css';  
+import './App.css';  
+import HomePage from './components/HomePage';  
+import Footer from './components/Footer';  
+import Header from './components/Header';  
+import SuccessMessage from './components/Success';  
+import FailedMessage from './components/Failed';  
+import axios from 'axios';  
+import ScrollToTopButton from './components/ScrollButton';  
+
+function App() {  
+    const [senderName, setSenderName] = useState('');  
+    const [senderEmail, setSenderEmail] = useState('');  
+    const [subject, setSubject] = useState('');  
+    const [message, setMessage] = useState('');  
+    const [recipients, setRecipients] = useState('');  
+    const [replyToName, setReplyToName] = useState('');  
+    const [replyToEmail, setReplyToEmail] = useState('');  
+    const [status, setStatus] = useState('');  
+    const [isPending, setIsPending] = useState(false);  
+
+    const handleSubmit = async (e) => {  
+        e.preventDefault();  
+        setIsPending(true);  // تعيين حالة الانتظار على true  
+
+        const data = {  
+            subject,  
+            message,  
+            recipients: recipients.split(','), // تحويل إلى مصفوفة  
+            senderName,  
+            senderEmail,  
+            replyToName,  
+            replyToEmail  
+        };  
+
+        try {  
+            const response = await axios.post('http://localhost:5000/send-email', data);  
+            setStatus(response.data.message);  
+        } catch (error) {  
+            setStatus('Error sending email : ' + error.message);  
+            // setStatus('Error sending email');  
+        } finally {  
+            setIsPending(false);  // تعيين حالة الانتظار إلى false بعد الانتهاء  
+            resetForm();  // استدعاء دالة مسح الحقول  
+        }  
+    };  
+
+    const resetForm = () => {  
+        setSenderName("");  
+        setSenderEmail("");  
+        setSubject("");  
+        setMessage("");  
+        setRecipients("");  
+        setReplyToName("");  
+        setReplyToEmail("");  
+    };  
+
+    const scrollToTop = () => {  
+        window.scrollTo({  
+            top: 0,  
+            behavior: 'smooth'  
+        });  
+    };  
+    function successButton () {
+              setStatus(!status)
+            }
+      
 
       return (
         <div className="App">
-          {status && <SuccessMessage Status = {status}  SetStatus = {setStatus}/> }
+          {status && <SuccessMessage Status = {status}  SetStatus = {setStatus} successButton ={successButton}/> }
           {/* : <FailedMessage/> */}
           {/* <button class="scroll-button" onClick={scrollToTop} ><FaAngleDoubleUp/></button> */}
           <ScrollToTopButton/>
@@ -75,7 +174,7 @@ import ScrollToTopButton from './components/ScrollButton';
          <HomePage/>
          <div className='container' id='Poll'>
          <h1 className='Container__H1'>Email Sender</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id='Form__Mailer'>
           <h2 className='Sender__Part__H2'>Sender Information : </h2>
           <div className='Sender__Part'>
             
@@ -157,7 +256,10 @@ import ScrollToTopButton from './components/ScrollButton';
               placeholder='Recipients Emails (comma separated) Ex : one@example.com , tow@example.com'
             />
           
-<button className='Send__Button' type="submit">Send Email</button>
+{/* <button className='Send__Button' type="submit">Send Email</button> */}
+<button className='Send__Button ' type="submit" onClick={handleSubmit} disabled={isPending}>  
+                <p className={isPending ? "loader" : ""}>{isPending ? '' : 'Send Message'}</p>
+            </button>  
         </form>
         </div>
          <Footer />
