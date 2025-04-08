@@ -23,7 +23,8 @@ const transporter = nodemailer.createTransport({
 });  
 
 // إعداد نقطة النهاية لإرسال الرسائل  
-app.post('/send-email', async (req, res) => {  
+// app.post('/send-email', async (req, res) => {  
+app.post('/api/send-email', async (req, res) => {  
     const { subject, message, recipients, senderName, senderEmail, replyToName, replyToEmail } = req.body;  
 
     // التحقق من صحة بيانات الإدخال  
