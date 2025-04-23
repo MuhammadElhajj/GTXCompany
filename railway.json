@@ -3,7 +3,10 @@
     {
       "src": "frontend/package.json",
       "use": "@railway/static",
-      "dir": "frontend"
+      "dir": "frontend",
+        "config": {
+        "buildTimeout": 600
+      }
     },
     {
       "src": "backend/package.json",
