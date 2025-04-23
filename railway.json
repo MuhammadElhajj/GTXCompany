@@ -1,0 +1,27 @@
+{
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@railway/static",
+      "dir": "frontend"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@railway/node",
+      "dir": "backend"
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/api/.*",
+      "dest": "/backend"
+    },
+    {
+      "src": ".*",
+      "dest": "/frontend"
+    }
+  ]
+}
